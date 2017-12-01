@@ -7,7 +7,7 @@ Official website: https://adventofcode.com/
  - Go
  - Ruby
  - PHP
- - JavaScript
+ - Python
  
 Why? Because that was the decision we made with my [AoC-buddy](https://github.com/Yitsushi).
 
