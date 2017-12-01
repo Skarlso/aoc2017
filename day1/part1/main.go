@@ -9,14 +9,14 @@ import (
 func main() {
 	var digits []int
 	con := readDigits()
-
+	l := len(con)
 	for i, d := range con {
-		if i+1 < len(con) && d == rune(con[i+1]) {
+		if d == rune(con[(i+1)%l]) {
 			digit, _ := strconv.Atoi(string(d))
 			digits = append(digits, digit)
 		}
 	}
-	fmt.Println("Sum: ", sumDigits(digits)+9)
+	fmt.Println("Sum: ", sumDigits(digits))
 }
 
 func readDigits() string {
