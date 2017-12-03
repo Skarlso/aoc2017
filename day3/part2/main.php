@@ -32,30 +32,14 @@ while (true) {
 	for ($i = 0; $i < $step; $i++) {
 		$x++;
 		$value = 0;
-		if ($arr[$y - 1][$x] != 0) {
-			$value += $arr[$y - 1][$x];
-		}
-		if ($arr[$y + 1][$x] != 0) {
-			$value += $arr[$y + 1][$x];
-		}
-		if ($arr[$y][$x - 1] != 0) {
-			$value += $arr[$y][$x - 1];
-		}
-		if ($arr[$y][$x + 1] != 0) {
-			$value += $arr[$y][$x + 1];
-		}
-		if ($arr[$y - 1][$x + 1] != 0) {
-			$value += $arr[$y - 1][$x + 1];
-		}
-		if ($arr[$y - 1][$x - 1] != 0) {
-			$value += $arr[$y - 1][$x - 1];
-		}
-		if ($arr[$y + 1][$x - 1] != 0) {
-			$value += $arr[$y + 1][$x - 1];
-		}
-		if ($arr[$y + 1][$x + 1] != 0) {
-			$value += $arr[$y + 1][$x + 1];
-		}
+        $value += $arr[$y - 1][$x];
+        $value += $arr[$y + 1][$x];
+        $value += $arr[$y][$x - 1];
+        $value += $arr[$y][$x + 1];
+        $value += $arr[$y - 1][$x + 1];
+        $value += $arr[$y - 1][$x - 1];
+        $value += $arr[$y + 1][$x - 1];
+        $value += $arr[$y + 1][$x + 1];
 		if ($value > $seed) {
 			echo "Value found: $value\n";
 			break 2;
@@ -65,30 +49,14 @@ while (true) {
 	for ($i = 0; $i < $step; $i++) {
 		$y--;
 		$value = 0;
-		if ($arr[$y - 1][$x] != 0) {
-			$value += $arr[$y - 1][$x];
-		}
-		if ($arr[$y + 1][$x] != 0) {
-			$value += $arr[$y + 1][$x];
-		}
-		if ($arr[$y][$x - 1] != 0) {
-			$value += $arr[$y][$x - 1];
-		}
-		if ($arr[$y][$x + 1] != 0) {
-			$value += $arr[$y][$x + 1];
-		}
-		if ($arr[$y - 1][$x + 1] != 0) {
-			$value += $arr[$y - 1][$x + 1];
-		}
-		if ($arr[$y - 1][$x - 1] != 0) {
-			$value += $arr[$y - 1][$x - 1];
-		}
-		if ($arr[$y + 1][$x - 1] != 0) {
-			$value += $arr[$y + 1][$x - 1];
-		}
-		if ($arr[$y + 1][$x + 1] != 0) {
-			$value += $arr[$y + 1][$x + 1];
-		}
+        $value += $arr[$y - 1][$x];
+        $value += $arr[$y + 1][$x];
+        $value += $arr[$y][$x - 1];
+        $value += $arr[$y][$x + 1];
+        $value += $arr[$y - 1][$x + 1];
+        $value += $arr[$y - 1][$x - 1];
+        $value += $arr[$y + 1][$x - 1];
+        $value += $arr[$y + 1][$x + 1];
 		if ($value > $seed) {
 			echo "Value found: $value\n";
 			break 2;
@@ -99,31 +67,15 @@ while (true) {
 	for ($i = 0; $i < $step; $i++) {
 		$x--;
 		$value = 0;
-		if ($arr[$y - 1][$x] != 0) {
-			$value += $arr[$y - 1][$x];
-		}
-		if ($arr[$y + 1][$x] != 0) {
-			$value += $arr[$y + 1][$x];
-		}
-		if ($arr[$y][$x - 1] != 0) {
-			$value += $arr[$y][$x - 1];
-		}
-		if ($arr[$y][$x + 1] != 0) {
-			$value += $arr[$y][$x + 1];
-		}
-		if ($arr[$y - 1][$x + 1] != 0) {
-			$value += $arr[$y - 1][$x + 1];
-		}
-		if ($arr[$y - 1][$x - 1] != 0) {
-			$value += $arr[$y - 1][$x - 1];
-		}
-		if ($arr[$y + 1][$x - 1] != 0) {
-			$value += $arr[$y + 1][$x - 1];
-		}
-		if ($arr[$y + 1][$x + 1] != 0) {
-			$value += $arr[$y + 1][$x + 1];
-		}
-		if ($value > $seed) {
+        $value += $arr[$y - 1][$x];
+        $value += $arr[$y + 1][$x];
+        $value += $arr[$y][$x - 1];
+        $value += $arr[$y][$x + 1];
+        $value += $arr[$y - 1][$x + 1];
+        $value += $arr[$y - 1][$x - 1];
+        $value += $arr[$y + 1][$x - 1];
+        $value += $arr[$y + 1][$x + 1];
+        if ($value > $seed) {
 			echo "Value found: $value\n";
 			break 2;
 		}
@@ -132,30 +84,14 @@ while (true) {
 	for ($i = 0; $i < $step; $i++) {
 		$y++;
 		$value = 0;
-		if ($arr[$y - 1][$x] != 0) {
-			$value += $arr[$y - 1][$x];
-		}
-		if ($arr[$y + 1][$x] != 0) {
-			$value += $arr[$y + 1][$x];
-		}
-		if ($arr[$y][$x - 1] != 0) {
-			$value += $arr[$y][$x - 1];
-		}
-		if ($arr[$y][$x + 1] != 0) {
-			$value += $arr[$y][$x + 1];
-		}
-		if ($arr[$y - 1][$x + 1] != 0) {
-			$value += $arr[$y - 1][$x + 1];
-		}
-		if ($arr[$y - 1][$x - 1] != 0) {
-			$value += $arr[$y - 1][$x - 1];
-		}
-		if ($arr[$y + 1][$x - 1] != 0) {
-			$value += $arr[$y + 1][$x - 1];
-		}
-		if ($arr[$y + 1][$x + 1] != 0) {
-			$value += $arr[$y + 1][$x + 1];
-		}
+        $value += $arr[$y - 1][$x];
+        $value += $arr[$y + 1][$x];
+        $value += $arr[$y][$x - 1];
+        $value += $arr[$y][$x + 1];
+        $value += $arr[$y - 1][$x + 1];
+        $value += $arr[$y - 1][$x - 1];
+        $value += $arr[$y + 1][$x - 1];
+        $value += $arr[$y + 1][$x + 1];
 		if ($value > $seed) {
 			echo "Value found: $value\n";
 			break 2;
