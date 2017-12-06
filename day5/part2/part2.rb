@@ -11,11 +11,7 @@ the_end = instructions.size
 
 while position < the_end do
   change_by = instructions[position]
-  if change_by >= 3
-    instructions[position] -= 1
-  else
-    instructions[position] += 1
-  end
+  instructions[position] += change_by >= 3 ? -1 : 1
   position += change_by
   steps += 1
 end
