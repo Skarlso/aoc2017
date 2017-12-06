@@ -4,19 +4,19 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"regexp"
 	"strconv"
-	"strings"
 )
 
 func main() {
 	inFile, _ := os.Open("input.txt")
 	defer inFile.Close()
 	scanner := bufio.NewScanner(inFile)
-	// var reg = regexp.MustCompile(`\d+`)
+	var reg = regexp.MustCompile(`\d+`)
 	sum := 0
 	for scanner.Scan() {
 		line := scanner.Text()
-		numbers := strings.Split(line, " ")
+		numbers := reg.FindAllString(line, -1)
 		nums := convert(numbers)
 		ev := even(nums)
 		sum += ev
