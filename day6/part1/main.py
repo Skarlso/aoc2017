@@ -23,5 +23,5 @@ while True:
     steps += 1
 
 # print(seen)
-print("Took %d steps for repeated config to appear." % steps)
+print("Took %d steps for repeated config to appear." % (steps + 1))
 print("Current MEMORY: %s" % MEMORY)
