@@ -25,7 +25,6 @@ $y = $middleY;
 # 1, 1 2, 1 2 3, 1 2 3 4....
 # increase by step. step is 1 then 2 then 3...
 $step = 1;
-$currStep = 1;
 while (true) {
 	for ($i = 0; $i < $step; $i++) {
 		$x++;
