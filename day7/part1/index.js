@@ -11,7 +11,7 @@ function Program(name, weight) {
   this.children = []
 }
 
-Program.prototype.add = (child) => {
+Program.prototype.addChild = (child) => {
   this.children.forEach(c => {
     if (child == c) return false
   });
@@ -52,8 +52,9 @@ rl.on('line', (line) => {
       if (c == null) {
         c = new Program(child, null)
         c.noParent = false
+        programs.push(c)
       }
-      parent.add(c)
+      parent.addChild(c)
     });
   } else {
     let m = line.match(/^([a-z]+) \((\d+)\)$/)
