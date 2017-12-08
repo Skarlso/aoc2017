@@ -11,7 +11,7 @@ function Program(name, weight) {
   this.children = []
 }
 
-Program.prototype.addChild = (child) => {
+Program.prototype.addChild = function(child) {
   this.children.forEach(c => {
     if (child == c) return false
   });
