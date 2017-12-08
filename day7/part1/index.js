@@ -55,7 +55,7 @@ rl.on('line', (line) => {
     let parent = findOrCreateProgram(m[1], parseInt(m[2], 10))
     let children = m[3].split(', ')
     children.forEach(child => {
-      let c = findOrCreateProgram(child, parseInt(m[2], 10))
+      let c = findOrCreateProgram(child, null)
       parent.addChild(c)
     })
   } else {
