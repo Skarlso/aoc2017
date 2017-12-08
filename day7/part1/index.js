@@ -14,30 +14,37 @@ function Program(name, weight) {
 Program.prototype.addChild = function(child) {
   this.children.forEach(c => {
     if (child == c) return false
-  });
+  })
   this.children.push(child)
 }
 
-function findProgram(name) {
-  programs.forEach(program => {
-    if (program.name === name) {
-      return program
+function findOrCreateProgram(name, weight) {
+  for (var i = 0; i < programs.length; i++) {
+    if (programs[i].name === name) {
+      if (weight !== null && programs[i].weight === null) {
+        programs[i].weight = weight
+      }
+      programs[i].noParent = false
+      return programs[i]
     }
-  })
-  return null
+  }
+
+  p = new Program(name, weight)
+  programs.push(p)
+  return p
 }
 
 function findRoot() {
-  programs.forEach(program => {
-    if (program.noParent) {
-      console.log(`Name of the root element: ${program.name}`)
+  for (var i = 0; i < programs.length; i++) {
+    if (programs[i].noParent) {
+      return programs[i].name
     }
-  })
+  }
   console.log('Root not found. :(')
 }
 
 const rl = readline.createInterface({
-  input: fs.createReadStream('../sample.txt'),
+  input: fs.createReadStream('../input.txt'),
   crlfDelay: Infinity
 })
 
@@ -45,26 +52,21 @@ rl.on('line', (line) => {
   // if string contains -> it has children
   if (/->/.test(line)) {
     let m = line.match(/^([a-z]+) \((\d+)\) -> (.*)$/)
-    let parent = new Program(m[1], parseInt(m[2], 10))
+    let parent = findOrCreateProgram(m[1], parseInt(m[2], 10))
     let children = m[3].split(', ')
     children.forEach(child => {
-      let c = findProgram(child)
-      if (c == null) {
-        c = new Program(child, null)
-        c.noParent = false
-        programs.push(c)
-      }
+      let c = findOrCreateProgram(child, parseInt(m[2], 10))
       parent.addChild(c)
-    });
+    })
   } else {
     let m = line.match(/^([a-z]+) \((\d+)\)$/)
-    var program = new Program(m[1], parseInt(m[2], 10))
+    var program = findOrCreateProgram(m[1], parseInt(m[2], 10))
     program.noParent = false
-    programs.push(program)
   }
 })
 
 rl.on('close', () => {
-  console.log(programs)
-  findRoot()
+  // console.log(programs)
+  root = findRoot()
+  console.log(root)
 })
