@@ -6,6 +6,7 @@ var ignore_indicator = '!'
 var in_garbage = false
 var ignored = false
 var garbage_characters = 0
+console.time('solution')
 for (let i = 0; i < data.trim().length; i++) {
   if (ignored) {
     ignored = false
@@ -29,5 +30,5 @@ for (let i = 0; i < data.trim().length; i++) {
     continue
   }
 }
-
+console.timeEnd('solution')
 console.log(`Total number of garbage dispensed: ${garbage_characters}`)
