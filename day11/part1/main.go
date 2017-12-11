@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func abs_int64(x int) int {
+func abs(x int) int {
 	if x < 0 {
 		return -x
 	}
@@ -20,6 +20,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// content := "se,se,se,se,n,se,n"
 	x := 0
 	y := 0
 	z := 0
@@ -27,20 +28,25 @@ func main() {
 	for _, step := range steps {
 		switch step {
 		case "n":
+			x--
 			y++
 		case "ne":
-			x++
+			y++
+			z--
 		case "se":
-			z++
+			x++
+			z--
 		case "s":
+			x++
 			y--
 		case "sw":
-			x--
+			y--
+			z++
 		case "nw":
-			z--
+			x--
+			z++
 		}
 	}
-	distance := abs_int64(x) + abs_int64(y)
-	fmt.Printf("(%d,%d,%d)\n", x, y, z)
+	distance := (abs(x) + abs(y) + abs(z)) / 2
 	fmt.Println(distance)
 }
