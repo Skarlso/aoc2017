@@ -7,36 +7,40 @@ import (
 	"strings"
 )
 
+func abs_int64(x int) int {
+	if x < 0 {
+		return -x
+	}
+
+	return x
+}
+
 func main() {
 	content, err := ioutil.ReadFile("../input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 	x := 0
-	y := -1
-	z := 1
-	steps := strings.Split(string(content), ",")
+	y := 0
+	z := 0
+	steps := strings.Split(strings.TrimSpace(string(content)), ",")
 	for _, step := range steps {
 		switch step {
 		case "n":
-			x--
 			y++
 		case "ne":
-			y++
-			z--
+			x++
 		case "se":
-			x++
-			z--
+			z++
 		case "s":
-			x++
 			y--
 		case "sw":
-			y--
-			z++
-		case "nw":
 			x--
-			z++
+		case "nw":
+			z--
 		}
 	}
-	fmt.Println(x, y, z)
+	distance := abs_int64(x) + abs_int64(y)
+	fmt.Printf("(%d,%d,%d)\n", x, y, z)
+	fmt.Println(distance)
 }
