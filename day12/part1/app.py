@@ -6,7 +6,7 @@ import re
 
 pipes = {}
 
-with open("../sample.txt", "r") as f:
+with open("../input.txt", "r") as f:
     data = f.readlines()
 
 for line in data:
@@ -15,4 +15,17 @@ for line in data:
     connections = m.group("connections")
     pipes[int(pipe)] = list(map(int, connections.strip().split(',')))
 
-print(pipes)
+
+seen = []
+
+
+def travers(program):
+    if seen.count(program) != 0:
+        return
+    seen.append(program)
+    for program in pipes[program]:
+        travers(program)
+
+
+travers(0)
+print(len(seen))
