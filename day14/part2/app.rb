@@ -21,12 +21,35 @@ def knot_hash(input)
   sequence.each_slice(16).map { |c| "%02x" % c.reduce(&:^) }.join
 end
 
-0..128.times do |i|
+# def mark_neighbours(i, j)
+
+
+# end
+
+128.times do |i|
   input = "#{puzzle}-#{i}"
   input_hash = knot_hash(input)
   grid[i] = input_hash.chars.map{|n| n.hex.to_s(2).rjust(n.size*4, '0')}.join.chars
 end
 
-grid.each do |row|
-
+def neigbours(i, j)
+  coordinates = []
+  coordinates << [i-1, j] if grid[i-1][j] == '1'
+  coordinates << [i-1, j] if grid[i-1][j] == '1'
+  coordinates << [i-1, j] if grid[i-1][j] == '1'
+  coordinates << [i-1, j] if grid[i-1][j] == '1'
 end
+
+queue = []
+groups = 0
+grid.each_with_index do |i, row|
+  row.each_with_index do |j, v|
+
+    if (v == '1')
+      queue << neighbours(i, j)
+      # Save coordinates into queue
+    end
+  end
+end
+
+puts "groups: #{groups}"
