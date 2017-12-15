@@ -25,7 +25,7 @@ used = 0
 0..128.times do |i|
   input = "#{puzzle}-#{i}"
   input_hash = knot_hash(input)
-  input_hash.chars.map{|n| n.hex.to_s(2).rjust(n.size*4, '0')}.join.chars.each{|n| used += n.to_i}
+  used += input_hash.chars.map{|n| n.hex.to_s(2).rjust(n.size*4, '0')}.join.count('1')
 end
 
 puts "Used fields: #{used}"
