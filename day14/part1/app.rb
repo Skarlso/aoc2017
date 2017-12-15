@@ -26,7 +26,7 @@ used = 0
   input = "#{puzzle}-#{i}"
   input_hash = knot_hash(input)
   input_hash = input_hash.chars.map{|n| n.hex.to_s(2).rjust(n.size*4, '0')}.join
-  input_hash.chars.each_with_object(used){|n, o| o += n.to_i }
+  input_hash.chars.each{|n| used += n.to_i }
 end
 
 puts "Used fields: #{used}"
