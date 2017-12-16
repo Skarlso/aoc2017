@@ -1,5 +1,4 @@
 puzzle = 'ugkiagan'
-grid = Array.new(128)
 
 def knot_hash(input)
   lengths = input.bytes
