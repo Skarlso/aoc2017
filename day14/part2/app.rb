@@ -1,5 +1,5 @@
-# puzzle = 'ugkiagan'
-puzzle = 'flqrgnkx'
+puzzle = 'ugkiagan'
+# puzzle = 'flqrgnkx'
 $grid = Array.new(128)
 SIZE_ROW = 128
 SIZE_COL = 128
@@ -27,19 +27,19 @@ end
 def get_neighbours(i, j)
   $grid[i][j] = 'x'
   visit = []
-  if $grid[i + 1] && $grid[i + 1][j] == '1'
+  if i + 1 < SIZE_COL && $grid[i + 1][j] == '1'
     visit << [i + 1, j]
     $grid[i + 1][j] = 'x'
   end
-  if $grid[i - 1] && $grid[i - 1][j] == '1'
+  if i - 1 >= 0 && $grid[i - 1][j] == '1'
     visit << [i - 1, j]
     $grid[i - 1][j] = 'x'
   end
-  if $grid[i][j + 1] && $grid[i][j + 1] == '1'
+  if j + 1 <= SIZE_ROW && $grid[i][j + 1] == '1'
     visit << [i, j + 1]
     $grid[i][j + 1] = 'x'
   end
-  if $grid[i][j - 1] && $grid[i][j - 1] == '1'
+  if j - 1 >= 0 && $grid[i][j - 1] == '1'
     visit << [i, j - 1]
     $grid[i][j - 1] = 'x'
   end
@@ -50,7 +50,7 @@ def mark_neighbours(i, j)
   queue = [[i, j]]
   while !queue.empty?
     neigbour = queue.shift
-    queue = get_neighbours(neigbour[0], neigbour[1])
+    queue += get_neighbours(neigbour[0], neigbour[1])
   end
 end
 
@@ -64,18 +64,11 @@ groups = 0
 
 $grid.each_with_index do |row, i|
   row.each_with_index do |v, j|
-    # p row
     if (v == '1')
       mark_neighbours(i, j)
       groups += 1
     end
-    # if $grid[i+1][j] == '0'
-    #   print('.')
-    # else
-    #   print($grid[i+1][j])
-    # end
   end
-  # puts "\n"
 end
 
 puts "groups: #{groups}"
