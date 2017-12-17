@@ -6,12 +6,13 @@ $programs = 'abcdefghijklmnop';
 
 $instructions = explode(",", $content);
 $memo[] = $programs;
+$end = 1000000000;
 
-for ($i=0; $i < 1000000000; $i++) {
+for ($i=0; $i < $end; $i++) {
     foreach ($instructions as $value) {
         switch ($value[0]) {
             case 's':
-                $shift = sscanf($value, "s%d");
+                list($shift) = sscanf($value, "s%d");
                 $shift = intval($shift, 10);
                 $head = substr($programs, 0, strlen($programs) - $shift);
                 $programs = substr($programs, -$shift) . $head;
@@ -34,4 +35,4 @@ for ($i=0; $i < 1000000000; $i++) {
     $memo[] = $programs;
 }
 
-echo "New program order: ". print_r($memo);
+echo "New program order: ". $memo[$end % sizeof($memo)];
