@@ -40,7 +40,6 @@ func set(reg string, val string) {
 	if err != nil {
 		register[reg] = register[val]
 	} else {
-		fmt.Println("Set")
 		register[reg] = v
 	}
 }
@@ -96,10 +95,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// fmt.Fscanf
 	instructions := strings.Split(string(content), "\n")
 	position := 0
 
+loop:
 	for {
 		line := strings.Split(instructions[position], " ")
 		lineReader := strings.NewReader(instructions[position])
@@ -113,7 +112,6 @@ func main() {
 			var val string
 			fmt.Fscanf(lineReader, "set %s %v", &reg, &val)
 			set(reg, val)
-			os.Exit(1)
 		case "add":
 			var reg string
 			var val string
@@ -133,16 +131,18 @@ func main() {
 			var reg string
 			fmt.Fscanf(lineReader, "rcv %s", &reg)
 			if rcv(reg) {
-				break
+				break loop
 			}
 		case "jgz":
 			var val string
 			fmt.Fscanf(lineReader, "jgz %v", &val)
 			position += jgz(val)
+			continue loop
 		default:
-			break
+			break loop
 		}
 		fmt.Println(instructions[position])
+		position++
 	}
 	fmt.Println("Frequency: ", playedFrq)
 }
