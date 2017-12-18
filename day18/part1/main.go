@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -34,38 +35,39 @@ func snd(val int) {
 	//TODO: Implement playing a sound at a certain frequency
 }
 
-func set(reg string, val interface{}) {
-	switch v := val.(type) {
-	case string:
-		register[reg] = register[v]
-	case int:
+func set(reg string, val string) {
+	v, err := strconv.Atoi(val)
+	if err != nil {
+		register[reg] = register[val]
+	} else {
+		fmt.Println("Set")
 		register[reg] = v
 	}
 }
 
-func add(reg string, val interface{}) {
-	switch v := val.(type) {
-	case string:
-		register[reg] += register[v]
-	case int:
+func add(reg string, val string) {
+	v, err := strconv.Atoi(val)
+	if err != nil {
+		register[reg] += register[val]
+	} else {
 		register[reg] += v
 	}
 }
 
-func mul(reg string, val interface{}) {
-	switch v := val.(type) {
-	case string:
-		register[reg] *= register[v]
-	case int:
+func mul(reg string, val string) {
+	v, err := strconv.Atoi(val)
+	if err != nil {
+		register[reg] *= register[val]
+	} else {
 		register[reg] *= v
 	}
 }
 
-func mod(reg string, val interface{}) {
-	switch v := val.(type) {
-	case string:
-		register[reg] %= register[v]
-	case int:
+func mod(reg string, val string) {
+	v, err := strconv.Atoi(val)
+	if err != nil {
+		register[reg] %= register[val]
+	} else {
 		register[reg] %= v
 	}
 }
@@ -77,11 +79,11 @@ func rcv(reg string) bool {
 	return false
 }
 
-func jgz(val interface{}) (ret int) {
-	switch v := val.(type) {
-	case string:
-		ret = register[v]
-	case int:
+func jgz(val string) (ret int) {
+	v, err := strconv.Atoi(val)
+	if err != nil {
+		ret = register[val]
+	} else {
 		ret = v
 	}
 	return
@@ -108,23 +110,23 @@ func main() {
 			snd(f)
 		case "set":
 			var reg string
-			var val interface{}
+			var val string
 			fmt.Fscanf(lineReader, "set %s %v", &reg, &val)
-			fmt.Println("Reg, Val: ", reg, val)
 			set(reg, val)
+			os.Exit(1)
 		case "add":
 			var reg string
-			var val interface{}
+			var val string
 			fmt.Fscanf(lineReader, "add %s %v", &reg, &val)
 			add(reg, val)
 		case "mul":
 			var reg string
-			var val interface{}
+			var val string
 			fmt.Fscanf(lineReader, "mul %s %v", &reg, &val)
 			mul(reg, val)
 		case "mod":
 			var reg string
-			var val interface{}
+			var val string
 			fmt.Fscanf(lineReader, "mod %s %v", &reg, &val)
 			mod(reg, val)
 		case "rcv":
@@ -134,12 +136,13 @@ func main() {
 				break
 			}
 		case "jgz":
-			var val interface{}
+			var val string
 			fmt.Fscanf(lineReader, "jgz %v", &val)
 			position += jgz(val)
 		default:
 			break
 		}
+		fmt.Println(instructions[position])
 	}
 	fmt.Println("Frequency: ", playedFrq)
 }
