@@ -28,10 +28,42 @@ var register = map[string]int{
 	"p": 0,
 }
 
+var commandMap = map[string]func(*strings.Reader){
+	"set": func(lineReader *strings.Reader) {
+		var reg string
+		var val string
+		fmt.Fscanf(lineReader, "set %s %v", &reg, &val)
+		set(reg, val)
+	},
+	"add": func(lineReader *strings.Reader) {
+		var reg string
+		var val string
+		fmt.Fscanf(lineReader, "add %s %v", &reg, &val)
+		add(reg, val)
+	},
+	"mul": func(lineReader *strings.Reader) {
+		var reg string
+		var val string
+		fmt.Fscanf(lineReader, "mul %s %v", &reg, &val)
+		mul(reg, val)
+	},
+	"mod": func(lineReader *strings.Reader) {
+		var reg string
+		var val string
+		fmt.Fscanf(lineReader, "mod %s %v", &reg, &val)
+		mod(reg, val)
+	},
+	"snd": func(lineReader *strings.Reader) {
+		var f string
+		fmt.Fscanf(lineReader, "snd %s", &f)
+		snd(f)
+	},
+}
+
 var playedFrq = 0
 
-func snd(val int) {
-	playedFrq = val
+func snd(reg string) {
+	playedFrq = register[reg]
 	//TODO: Implement playing a sound at a certain frequency
 }
 
@@ -78,14 +110,25 @@ func rcv(reg string) bool {
 	return false
 }
 
-func jgz(val string) (ret int) {
-	v, err := strconv.Atoi(val)
-	if err != nil {
-		ret = register[val]
+func jgz(off, val string) (int, bool) {
+	var x int
+	var y int
+	v1, err1 := strconv.Atoi(val)
+	if err1 != nil {
+		x = register[val]
 	} else {
-		ret = v
+		x = v1
 	}
-	return
+	v2, err2 := strconv.Atoi(off)
+	if err2 != nil {
+		y = register[off]
+	} else {
+		y = v2
+	}
+	if x > 0 {
+		return y, true
+	}
+	return 0, false
 }
 
 func main() {
@@ -98,50 +141,28 @@ func main() {
 	instructions := strings.Split(string(content), "\n")
 	position := 0
 
-loop:
 	for {
 		line := strings.Split(instructions[position], " ")
 		lineReader := strings.NewReader(instructions[position])
-		switch line[0] {
-		case "snd":
-			var f int
-			fmt.Fscanf(lineReader, "snd %d", &f)
-			snd(f)
-		case "set":
-			var reg string
-			var val string
-			fmt.Fscanf(lineReader, "set %s %v", &reg, &val)
-			set(reg, val)
-		case "add":
-			var reg string
-			var val string
-			fmt.Fscanf(lineReader, "add %s %v", &reg, &val)
-			add(reg, val)
-		case "mul":
-			var reg string
-			var val string
-			fmt.Fscanf(lineReader, "mul %s %v", &reg, &val)
-			mul(reg, val)
-		case "mod":
-			var reg string
-			var val string
-			fmt.Fscanf(lineReader, "mod %s %v", &reg, &val)
-			mod(reg, val)
-		case "rcv":
+		if line[0] == "rcv" {
 			var reg string
 			fmt.Fscanf(lineReader, "rcv %s", &reg)
 			if rcv(reg) {
-				break loop
+				break
 			}
-		case "jgz":
-			var val string
-			fmt.Fscanf(lineReader, "jgz %v", &val)
-			position += jgz(val)
-			continue loop
-		default:
-			break loop
+		} else if line[0] == "jgz" {
+			var off, val string
+			fmt.Fscanf(lineReader, "jgz %v %v", &val, &off)
+			if v, ok := jgz(off, val); ok {
+				position += v
+			} else {
+				position++
+			}
+			continue
+		} else {
+			commandMap[line[0]](lineReader)
 		}
-		fmt.Println(instructions[position])
+		// fmt.Println(instructions[position])
 		position++
 	}
 	fmt.Println("Frequency: ", playedFrq)
