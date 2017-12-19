@@ -68,6 +68,7 @@ func snd(reg string) {
 }
 
 func set(reg string, val string) {
+	//TODO: Extract this to ExtractVariable or something.
 	v, err := strconv.Atoi(val)
 	if err != nil {
 		register[reg] = register[val]
@@ -77,6 +78,7 @@ func set(reg string, val string) {
 }
 
 func add(reg string, val string) {
+	//TODO: Extract this to ExtractVariable or something.
 	v, err := strconv.Atoi(val)
 	if err != nil {
 		register[reg] += register[val]
@@ -86,6 +88,7 @@ func add(reg string, val string) {
 }
 
 func mul(reg string, val string) {
+	//TODO: Extract this to ExtractVariable or something.
 	v, err := strconv.Atoi(val)
 	if err != nil {
 		register[reg] *= register[val]
@@ -95,6 +98,7 @@ func mul(reg string, val string) {
 }
 
 func mod(reg string, val string) {
+	//TODO: Extract this to ExtractVariable or something.
 	v, err := strconv.Atoi(val)
 	if err != nil {
 		register[reg] %= register[val]
