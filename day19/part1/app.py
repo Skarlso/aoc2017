@@ -42,6 +42,7 @@ def next_move(direction, x, y):
         return None, 0, 0
 
 
+# TODO: Currently these are arrays of rows. Use strings instead. There is no real need to explode them.
 with open(filename, "r") as f:
     for line in f:
         grid.append([c for c in line.rstrip('\n')])
@@ -51,8 +52,6 @@ for i, col in enumerate(grid[0]):
     if col == "|":
         x, y = i, 0
         break
-
-print("starting position is: x:%d, y:%d" % (x, y))
 
 direction, x, y = next_move(UP, x, y)
 while (direction != None):
