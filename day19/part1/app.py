@@ -54,7 +54,7 @@ for i, col in enumerate(grid[0]):
         break
 
 direction, x, y = next_move(UP, x, y)
-while (direction != None):
+while direction != None:
     direction, x, y = next_move(direction, x, y)
 
 print("Gathered letters are: %s" % PUZZLE)
