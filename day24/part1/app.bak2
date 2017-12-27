@@ -1,0 +1,92 @@
+<?php
+
+class Component
+{
+    public $portA, $portB;
+    public $inUse;
+
+    public function __construct($porta, $portb)
+    {
+        $this->portA = intval($porta);
+        $this->portB = intval($portb);
+        $this->inUse = false;
+    }
+
+    public function strength(): int
+    {
+        return $this->portA + $this->portB;
+    }
+}
+
+$filename = $argv[1];
+$content = file_get_contents($filename, 'r');
+
+$components = [];
+foreach (explode("\n", $content) as $key => $value) {
+    $component = explode("/", $value);
+    sort($component);
+    $components[] = new Component($component[0], $component[1]);
+}
+
+sort($components);
+$bridges = [];
+
+function build($next, $validComponents, $bridge)
+{
+    $ret = [];
+    $next->inUse = true;
+    // print_r($next);
+    foreach ($validComponents as $key => $value) {
+        if ($value->inUse) {
+            continue;
+        }
+        if ($value->portA == $next->portB || $value->portB == $next->portB && !in_array($value, $bridge)) {
+            $value->inUse = true;
+            $ret[] = $value;
+        }
+    }
+    return $ret;
+}
+
+/*
+ * Build bridges using a specific starter node.
+ * Visit all posibilities and give them back.
+ * Later on try counting stregth in the builder.
+ */
+function buildBridge($starter)
+{
+    global $components;
+    $validComponents = $components;
+    $bridge = [];
+    $bridge[] = $starter;
+    $queue[] = $starter;
+    while (!empty($queue)) {
+        $next = array_shift($queue);
+        $built = build($next, $validComponents, $bridge);
+        // if (sizeof($built) > 1) {
+        //     foreach ($built as $key => $value) {
+        //         $newBridge = $bridge;
+        //         $newBridge[] = $value;
+        //         $bridge = array_merge($bridge, $newBridge);
+        //     }
+        // }
+        $validComponents = array_diff_key($validComponents, $built);
+        $queue = array_merge($queue, $built);
+
+        if (!empty($built)) {
+            $bridge = array_merge($bridge, $built);
+        }
+    }
+    return $bridge;
+}
+
+$bridges = [];
+while(true) {
+    $starter = array_shift($components);
+    if ($starter->portA != 0) {
+        break;
+    }
+    $bridges[] = buildBridge($starter);
+}
+
+print_r($bridges);

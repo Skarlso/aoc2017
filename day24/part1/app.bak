@@ -1,0 +1,90 @@
+<?php
+
+class Component
+{
+    public $portA, $portB;
+    public $inUse;
+
+    public function __construct($porta, $portb)
+    {
+        $this->portA = $porta;
+        $this->portB = $portb;
+        $this->inUse(false);
+    }
+}
+
+$filename = $argv[1];
+$content = file_get_contents($filename, 'r');
+
+$components = [];
+foreach (explode("\n", $content) as $key => $value) {
+    $component = explode("/", $value);
+    sort($component);
+    $components[] = new Component($component[0], $component[1]);
+}
+
+sort($components);
+print_r($components);
+$bridges = [];
+
+function build($next, $bridge, $validComponents)
+{
+    $filter = array_filter($validComponents, function($c) use ($next, $bridge) {
+        if (($c[0] === $next[1] || $c[1] === $next[1])) {
+            return true;
+        }
+        return false;
+    });
+
+    return $filter;
+}
+
+/*
+ * Build bridges using a specific starter node.
+ * Visit all posibilities and give them back.
+ * Later on try counting stregth in the builder.
+ */
+function buildBridge($starter)
+{
+    global $components;
+    $validComponents = $components;
+    $bridge = [];
+    $bridge[] = $starter;
+    $queue[] = $starter;
+    while (!empty($queue)) {
+        $next = array_shift($queue);
+        $built = build($next, $bridge, $validComponents);
+        $validComponents = array_diff_key($validComponents, $built);
+        $queue = array_merge($queue, $built);
+
+        if (!empty($built)) {
+            $bridge[] = $built;
+        }
+    }
+    return $bridge;
+}
+
+$bridges = [];
+while(true) {
+    $starter = array_shift($components);
+    if ($starter[0] != 0) {
+        break;
+    }
+    $bridges[] = buildBridge($starter);
+}
+
+
+function traverse($bridges)
+{
+    $queue = [];
+
+}
+
+# Start building the bridge. Add components. If a component count if more than
+# one, check if they can connect. If they can, connect them, if they can't
+# build a b
+foreach ($bridges as $key => $bridge) {
+    foreach ($bridge as $key => $component) {
+        
+    }
+}

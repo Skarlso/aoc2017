@@ -11,12 +11,28 @@ File.open(filename, 'r') do |f|
   end
 end
 
-p patterns
+# Build the matchbook
+matchbook = {}
 
-# p start
-# p size
-# if size & 1 == 0
-#   puts "anyad"
-# end
+patterns.each do |p|
+  rule, transform = p.split(' => ')
+  # rotate and flip the rule until all combinations are there
+  # add them to the matchbook with the same rule.
+  match0 = rule.split('/').flatten
+  matchbook[match0] = transform.split('/')
+  match1 = rule.split('/').reverse.flatten
+  matchbook[match1] = transform.split('/')
+  match2 = rule.split('/').map(&:reverse).flatten
+  matchbook[match2] = transform.split('/')
+  match3 = rule.split('/').map(&:chars).transpose.map(&:join).flatten
+  matchbook[match3] = transform.split('/')
+  match4 = rule.split('/').map(&:chars).transpose.map(&:join).map(&:reverse).flatten
+  matchbook[match4] = transform.split('/')
+  match5 = rule.split('/').map(&:chars).transpose.map(&:join).map(&:reverse).reverse.flatten
+  matchbook[match5] = transform.split('/')
+end
 
-# Pre-rotate and flip all the artist patterns, so that I don't have to keep rotating the input pattern.
+p matchbook
+
+# Start the dividing
+
